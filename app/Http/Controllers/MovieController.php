@@ -51,7 +51,7 @@ class MovieController extends Controller
             Storage::disk('public')->putFileAs('product/image', $request->image,$imageName);
             Movie::create($request->post()+['image'=>$imageName]);
             return response()->json([
-                'message'=>'Movie Created Successfully!!'
+                'message'=>'Movie Created Successfully!!!'
             ]);
 
         }catch(\Exception $e){
