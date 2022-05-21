@@ -19,7 +19,8 @@ class MovieFactory extends Factory
         return [
             'title'=> $this->faker->word,
             'description'=>$this->faker->paragraph,
-            'image'=> 'test.jpg'
+            'image'=> $this->faker->imageUrl($width = 200, $height = 200),
+            'price'=> $this->faker->numberBetween($min = 18.00, $max = 22.00)
         ];
     }
 }

@@ -51,14 +51,14 @@ class MovieController extends Controller
             Storage::disk('public')->putFileAs('product/image', $request->image,$imageName);
             Movie::create($request->post()+['image'=>$imageName]);
             return response()->json([
-                'message'=>'Movie Created Successfully!!!'
+                'message'=>'Movie Created Successfully!!'
             ]);
 
         }catch(\Exception $e){
             Log::error($e->getMessage());
-                return response()->json([
-                    'message'=>'Something goes wrong while creating a product!!'
-                ],500);
+            return response()->json([
+                'message'=>'Something goes wrong while creating a product!!'
+            ],500);
         }
 
     }
@@ -72,8 +72,16 @@ class MovieController extends Controller
     public function show(Movie $movie)
     {
         //Return specific movie
+        if(is_null($movie)){
+            return response()->json([
+                "success"=>false,
+                "message"=> "Unable to retreive movie details (Not found)"
+            ]);
+        }
+
         return response()->json([
-            'product'=>$movie
+            "success"=>true,
+            'data'=>$movie
         ]);
     }
 
@@ -152,8 +160,16 @@ class MovieController extends Controller
             } catch (\Exception $e) {
                 Log::error($e->getMessage());
                 return response()->json([
-                    'message'=>'Something goes wrong while deleting a movie!!'
+                    'message'=>'Something goes wrong while deleting a movie'
                 ]);
             }
+    }
+
+    public function getShowtimes(Movie $request) {
+        $showtimes = Movie::find($request);
+        return response()->json([
+            "message"=>"Success",
+            "Data"=> $showtimes
+        ]);
     }
 }

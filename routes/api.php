@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ShowtimeController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
@@ -21,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('movies',MovieController::class);
+Route::resource('showtimes',ShowtimeController::class);
+Route::resource('bookings',BookingController::class);
 
 /**
  * Registers new users
@@ -28,3 +32,4 @@ Route::resource('movies',MovieController::class);
  * name, email, password, password_confirmation
  */
 Route::post('/register',[RegisteredUserController::class, 'store'])->middleware(['guest']);
+Route::post('/availableshowtimes/{id}',[MovieController::class,'getShowtimes']);

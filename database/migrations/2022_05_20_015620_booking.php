@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('movies', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->text('description');
-            $table->string('image'); 
-            $table->decimal('price'); 
+            $table->unsignedBigInteger('showtime_id');
+            $table->string('name',100);
+            $table->string('phone_no',14);
+            $table->integer('quantity');
+            $table->double('total');
             $table->timestamps();
+
+            $table->foreign('showtime_id')->references('id')->on('showtimes')->onDelete('restrict');
         });
     }
 
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists('bookings');
     }
 };
