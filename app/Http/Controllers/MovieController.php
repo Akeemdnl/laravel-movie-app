@@ -18,7 +18,7 @@ class MovieController extends Controller
     public function index()
     {
         //Get all movie list
-        return Movie::select('id','title','description','image')->get();
+        return Movie::select('id','title','description','image', 'price')->get();
     }
 
     /**
@@ -43,7 +43,8 @@ class MovieController extends Controller
         $request->validate([
             'title'=>'required',
             'description'=>'required',
-            'image'=>'required|image'
+            'image'=>'required|image',
+            'price'=>'required|integer'
         ]);
 
         try {
@@ -111,7 +112,8 @@ class MovieController extends Controller
         $request->validate([
             'title'=>'required',
             'description'=>'required',
-            'image'=>'nullable'
+            'image'=>'nullable',
+            'price'=>'required'
         ]);
 
         try{
