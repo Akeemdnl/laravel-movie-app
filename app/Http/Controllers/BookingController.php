@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Movie;
 use App\Models\Showtime;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -24,11 +25,13 @@ class BookingController extends Controller
         //     'data'=> $bookings
         // ]);
 
-        $booking = Booking::with('showtime')->get();
-        //$booking->showtime = ;
+        $bookings = Booking::with('showtime')->get();
+        foreach($bookings as $booking){
+            $booking->movie = Movie::select('id','title','description','price')->firstWhere('id',$booking->showtime->movie_id);
+        }
         return response()->json([
                 'Success'=> true,
-                'data'=> $booking
+                'data'=> $bookings
                 ]);
     }
 

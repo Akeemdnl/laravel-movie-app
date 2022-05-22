@@ -79,9 +79,11 @@ class MovieController extends Controller
             ]);
         }
 
+        $data = Movie::with('showtime')->where('id',$movie->id)->get();
+
         return response()->json([
             "success"=>true,
-            'data'=>$movie
+            'data'=>$data
         ]);
     }
 

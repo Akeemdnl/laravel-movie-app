@@ -15,8 +15,7 @@ class ShowtimeController extends Controller
     public function index()
     {
         //Get all showtime
-        $showtimes =  Showtime::with('movie')->get();
-
+        $showtimes = Showtime::select('id','movie_id','date','time')->with('movie')->get();
         return response()->json([
             "Success"=> true,
             "Data"=> $showtimes
@@ -53,8 +52,10 @@ class ShowtimeController extends Controller
      */
     public function show(Showtime $showtime)
     {
+        //$showtimes = Showtime::select('id','movie_id','date','time')->with('movie')->get();
         return response()->json([
-            "Showtime"=>$showtime
+            "success"=>true,
+            "data"=>$showtime
         ]);
         
     }
